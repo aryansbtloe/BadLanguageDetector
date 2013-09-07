@@ -17,18 +17,17 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	[textView setText:@"i am gonna kick you ass"];
+	[textView setText:@"hey your bastard......"];
 }
 
 - (IBAction)sendFeedBack:(id)sender {
-	
 	static BadWordList *badWordDetector = nil;
 	if (badWordDetector == nil) {
 		badWordDetector = [[BadWordList alloc]init];
 	}
-	NSString *wordFound = [badWordDetector isAnyOfTheWordFoundIn:[textView text]];
-	NSString *message = wordFound ? [NSString stringWithFormat:@"please don't use '%@' kind of words", wordFound] : @"Thanks for your valuable feedback";
-	[[[UIAlertView alloc]initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"okay" otherButtonTitles:nil]show];
+	NSString *wordFound = [badWordDetector detectBadWordsOn:[textView text]];
+	NSString *message = wordFound ? [NSString stringWithFormat:@"Don't use \n'%@'\n kind of words", wordFound] : @"successfully posted your comment.";
+	[[[UIAlertView alloc]initWithTitle:(wordFound?@"Hey!":@"Information") message:message delegate:nil cancelButtonTitle:@"okay" otherButtonTitles:nil]show];
 }
 
 @end
